@@ -3,19 +3,19 @@ import * as actions from 'actions/contracts';
 
 describe('[REDUCER] Contracts Reducer', () => {
   test('should return initial state', () => {
-    const expected = reducer(undefined, {});
-    expect(expected).toEqual(initialState);
+    const actual = reducer(undefined, {});
+    expect(initialState).toEqual(actual);
   });
 
   test('should handle ACCESS_CONTRACT', () => {
     const [address, abiJson] = ['Address String', 'ABI JSON String'];
     const action = actions.accessContract(address, abiJson);
-    const actual = {
+    const expected = {
       ...initialState,
       selectedAddress: address,
       selectedABIJson: abiJson
     };
-    const expected = reducer(initialState, action);
+    const actual = reducer(initialState, action);
     expect(expected).toEqual(actual);
   });
 
@@ -31,21 +31,11 @@ describe('[REDUCER] Contracts Reducer', () => {
       }
     ];
     const action = actions.setInteractiveContract(functions);
-    const actual = {
+    const expected = {
       ...initialState,
       selectedABIFunctions: functions
     };
-    const expected = reducer(initialState, action);
+    const actual = reducer(initialState, action);
     expect(expected).toEqual(actual);
   });
 });
-
-// actions.accessContract(address: string, abiJson: string)
-//
-// actions.setInteractiveContract(functions: [{
-//   name: string,
-//   type: string,
-//   constant: boolean,
-//   inputs: Array<ABIFunctionField>,
-//   outputs: Array<ABIFunctionField>
-// }])
