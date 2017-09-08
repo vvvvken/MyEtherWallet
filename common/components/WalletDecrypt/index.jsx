@@ -9,7 +9,12 @@ import LedgerNanoSDecrypt from './LedgerNano';
 import TrezorDecrypt from './Trezor';
 import ViewOnlyDecrypt from './ViewOnly';
 import map from 'lodash/map';
-import { unlockPrivateKey, unlockKeystore, setWallet } from 'actions/wallet';
+import {
+  unlockPrivateKey,
+  unlockKeystore,
+  unlockMnemonic,
+  setWallet
+} from 'actions/wallet';
 import { connect } from 'react-redux';
 
 const WALLETS = {
@@ -34,7 +39,8 @@ const WALLETS = {
   'mnemonic-phrase': {
     lid: 'x_Mnemonic',
     component: MnemonicDecrypt,
-    disabled: true
+    initialParams: {},
+    unlock: unlockMnemonic
   },
   'ledger-nano-s': {
     lid: 'x_Ledger',
@@ -165,7 +171,7 @@ export class WalletDecrypt extends Component {
 
   onUnlock = (payload: any) => {
     this.props.dispatch(
-      WALLETS[this.state.selectedWalletKey].unlock(this.state.value || payload)
+      WALLETS[this.state.selectedWalletKey].unlock(payload || this.state.value)
     );
   };
 }
